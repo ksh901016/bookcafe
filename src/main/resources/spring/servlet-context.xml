@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <!-- 스프링 MVC 설정 기초 -->
+    <!-- 스프링 MVC를 설정하려면 최소한 다음의 구성 요소를 빈 객체로 등록해주어야한다.-->
+    <!-- 1. HandlerMapping
+         2. HandlerAdapter
+         3. ViewResolver -->
+    <!-- mvc:annotation-driven사용하면 HandlerMapping과 HandlerAdpater 객체 생성 완료 -->
+	<mvc:annotation-driven />
+	<!-- 뷰 이름을 실제 어떤 뷰와 연결할지 결정하는 ViewResolver를 설정하고 있다. 이 ViewResolver는 JSP를 뷰로 사용하게 되는데, 다음의 방법으로 뷰로 사용할 JSP를 선택 -->
+	<!-- prefix + 뷰이름  + suffix -->
+	<!-- 에를 들어, 앞서 작성한 HelloController 클래스의 hello() 메서드 "hello"를 뷰 이름으로 리턴 
+	     /WEB-INF/views/hello.jsp 호출-->
+	<!-- ViewResolver : 컨트롤러의 처리 결과를 보여줄 뷰를 결정한다. -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>
+	
+	<!-- context:component-scan : Spring 컴포넌트 스캔을 이용한 빈 자동 등록 -->
+	
+	<context:component-scan base-package="com.cdg.bookcafe">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+</beans>

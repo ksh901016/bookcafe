@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+    <!--    스프링 MVC 기본설정
+    1. Web.xml 에 DispatcherServlet 설정
+    2. Web.xml에 캐릭터 인코딩 처리 위한 필터 설정
+    3. 스프링 MVC 설정
+    A.HandlerMapping, HandlerAdapter 설정
+    B.ViewResolver 설정 
+    -->
+
+    <display-name>Book Cafe</display-name>
+ 
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    
+    <!-- classpath기준으로 하여 인식을 하겠다! -->
+    <!-- classpath: 컴파일 기준이 되는 폴더 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/spring/applicationContext-root.xml</param-value>
+    </context-param>
+    
+    <!-- applicationContext-root.xml을 읽어주는 녀석, spring에서 제공 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- 프로젝트 내 web.xml 파일에 DispatcherServlet설정을 추가  -->
+    <!-- DispatcherServlet은 내부적으로 스프링 컨테이너를 생성하는데, ContextConfigLocation초기화 파라미터를 이용해서 컨테이너를 사용할 설정 파일을 지정한다.
+        Servlet-context.xml 파일을 스프링 설정 파일로 사용 -->
+    <!-- Web.xml 파일에 DispatcherServlet을 설정하는 방법,
+         DispatcherServlet은 내부적으로 스프링 컨테이너를 생성한다. 별도의 초기화 파라미터 없이 DispatcherServlet을 설정하면 웹 어플리케이션의 /WEB-INF/ 디렉터리에 위치한
+         [서블릿이름]-servlet.xml파일을 스프링 설정 파일로 사용한다.
+                    한 개 이상의 설정 파일을 사용해야 하거나 또는 이름이 [이름]-servlet.xml 형식이 아닌 파일을 사용해야 한다면, 다음과 같이 contextConfigLocation 초기화 파라미터로 설정 파일을 사용해야 한다면, 다음과 같이 contextConfigLocation 초기화 파라미터로 설정 파일 목록을 지정하면된다
+     -->
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/spring/servlet-context.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+
